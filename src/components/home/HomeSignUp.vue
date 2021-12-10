@@ -35,7 +35,7 @@
     </el-form>
   </div>
   <div>
-    <button @click="getUserInfo">getUserInfo1</button>
+    <button @click="getUserInfo">getUserInfo2</button>
   </div>
 </template>
 
