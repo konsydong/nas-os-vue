@@ -2,11 +2,11 @@
   <div class="hello">
     <h1>{{ msg }}</h1>
   </div>
-  <HomeLogin></HomeLogin>
+  <HomeSignUp></HomeSignUp>
 </template>
 
 <script>
-import HomeLogin from "./home/HomeLogin";
+import HomeSignUp from "./home/HomeSignUp";
 
 export default {
   name: 'HelloWorld',
@@ -14,7 +14,7 @@ export default {
     msg: String
   },
   components: {
-    HomeLogin
+    HomeSignUp
   }
 }
 </script>
