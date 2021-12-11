@@ -8,11 +8,15 @@
         label-width="120px"
         class="demo-ruleForm"
     >
+      <el-form-item label="UsrName" prop="usrName">
+        <el-input v-model="ruleForm.usrName" placeholder="Please Input UsrName" clearable></el-input>
+      </el-form-item>
       <el-form-item label="Password" prop="pass">
         <el-input
             v-model="ruleForm.pass"
             type="password"
             autocomplete="off"
+            placeholder="Please Input PassWord" clearable
         ></el-input>
       </el-form-item>
       <el-form-item label="Confirm" prop="checkPass">
@@ -20,11 +24,10 @@
             v-model="ruleForm.checkPass"
             type="password"
             autocomplete="off"
+            placeholder="Please Confirm UsrName" clearable
         ></el-input>
       </el-form-item>
-      <el-form-item label="Age" prop="age">
-        <el-input v-model.number="ruleForm.age"></el-input>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')"
         >Submit
@@ -34,30 +37,24 @@
       </el-form-item>
     </el-form>
   </div>
-  <div>
-    <button @click="getUserInfo">getUserInfo2</button>
-  </div>
 </template>
 
 <script>
 import axios from "axios";
 
+
 export default {
   name: 'HomeSignUp',
   data() {
-    const checkAge = (rule, value, callback) => {
+    const checkUsrName = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('Please input the age'))
+        return callback(new Error('Please input the usrName'))
       }
       setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('Please input digits'))
+        if (Number.isInteger(value)) {
+          callback(new Error('Please input string'))
         } else {
-          if (value < 18) {
-            callback(new Error('Age must be greater than 18'))
-          } else {
-            callback()
-          }
+          callback()
         }
       }, 1000)
     }
@@ -82,22 +79,25 @@ export default {
     }
     return {
       ruleForm: {
+        usrName: '',
         pass: '',
         checkPass: '',
-        age: '',
       },
       rules: {
+        usrName: [{validator: checkUsrName, trigger: 'blur'}],
         pass: [{validator: validatePass, trigger: 'blur'}],
         checkPass: [{validator: validatePass2, trigger: 'blur'}],
-        age: [{validator: checkAge, trigger: 'blur'}],
       },
     }
   },
   methods: {
+    //点击submit
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          //form先转json字符串再转json对象
+          let formNameStr = JSON.parse(JSON.stringify(this.$refs[formName]))['model']
+          this.signUpUsr(formNameStr)
         } else {
           console.log('error submit!!')
           return false
@@ -107,14 +107,20 @@ export default {
     resetForm(formName) {
       this.$refs[formName].resetFields()
     },
-    getUserInfo() {
-      axios.get('/WebServer/home/get-user-info?id=1', null, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-        }
-      })
+
+    //注册用户
+    signUpUsr(formNameStr) {
+      axios.post('/WebServer/home/usrInfo/signUpUsr', {usrName: formNameStr['usrName'], passWord: formNameStr['pass']},
+          {
+            headers: {
+              'Content-Type': 'application/json;charset=UTF-8'
+            }
+          })
           .then((response) => {
             console.log(response);
+            if (401 === response['code']) {
+              console.log(response);
+            }
           })
           .catch((error) => {
             console.log(error);
