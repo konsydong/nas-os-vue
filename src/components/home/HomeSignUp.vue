@@ -8,7 +8,7 @@
         label-width="120px"
         class="demo-ruleForm"
     >
-      <el-form-item label="UsrName" prop="usrName">
+      <el-form-item label="UserName" prop="usrName">
         <el-input v-model="ruleForm.usrName" placeholder="Please Input UsrName" clearable></el-input>
       </el-form-item>
       <el-form-item label="Password" prop="pass">
