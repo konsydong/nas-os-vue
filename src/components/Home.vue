@@ -9,7 +9,7 @@
 import HomeSignUp from "./home/HomeSignUp";
 
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   props: {
     msg: String
   },

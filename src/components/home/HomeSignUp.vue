@@ -9,7 +9,7 @@
         class="demo-ruleForm"
     >
       <el-form-item label="UserName" prop="usrName">
-        <el-input v-model="ruleForm.usrName" placeholder="Please Input UsrName" clearable></el-input>
+        <el-input v-model="ruleForm.usrName" placeholder="Please Input UserName" clearable></el-input>
       </el-form-item>
       <el-form-item label="Password" prop="pass">
         <el-input
@@ -24,7 +24,7 @@
             v-model="ruleForm.checkPass"
             type="password"
             autocomplete="off"
-            placeholder="Please Confirm UsrName" clearable
+            placeholder="Please Confirm PassWord" clearable
         ></el-input>
       </el-form-item>
 
